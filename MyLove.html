@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Do You Love Me?</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f8eee7;
+      color: #5c4033;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .question-container {
+      text-align: center;
+    }
+
+    video {
+      width: 300px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    h2 {
+      font-size: 28px;
+      margin-top: 20px;
+    }
+
+    .button-container {
+      margin-top: 20px;
+      position: relative;
+      height: 80px;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .yes-btn {
+      background-color: #d6a77a;
+      color: white;
+      margin-right: 20px;
+    }
+
+    .yes-btn:hover {
+      background-color: #c58e5f;
+    }
+
+    .no-btn {
+      background-color: #f7c9aa;
+      color: #5c4033;
+      position: absolute;
+    }
+
+    .result-container {
+      display: none;
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .heart {
+      position: absolute;
+      color: red;
+      font-size: 24px;
+      animation: floatHeart 2s linear forwards;
+    }
+
+    @keyframes floatHeart {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-150px) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="question-container">
+
+  <div class="tenor-gif-embed" data-postid="25904977" data-share-method="host" data-aspect-ratio="1.09215" data-width="100%"><a href="https://tenor.com/view/mocha-and-milk-bears-love-gif-25904977">Mocha And Sticker</a>from <a href="https://tenor.com/search/mocha-stickers">Mocha Stickers</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+  
+  <h2>Do you love me?</h2>
+  <div class="button-container">
+    <button class="yes-btn js-yes-btn">Yes</button>
+    <button class="no-btn js-no-btn" id="noBtn">No</button>
+  </div>
+</div>
+
+<div class="result-container" id="result">
+ <!--- <video class="gif-result" src="Love me.mp4" autoplay loop muted></video>-->
+<div class="tenor-gif-embed" data-postid="9366337859362657245" data-share-method="host" data-aspect-ratio="1.19712" data-width="100%"><a href="https://tenor.com/view/bear-gif-9366337859362657245">Bear GIF</a>from <a href="https://tenor.com/search/bear-gifs">Bear GIFs</a></div> <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+ 
+  <h2>I knew it! ❤️</h2>
+</div>
+
+<!-- Sound effect -->
+<audio id="loveSound" src="love-sound.mp3" preload="auto"></audio>
+
+<script>
+  const noBtn = document.getElementById('noBtn');
+  const container = document.querySelector('.button-container');
+  const loveSound = document.getElementById('loveSound');
+
+  // Move "No" button when mouse gets close to it - anywhere on the page
+  document.addEventListener('mousemove', (e) => {
+    const rect = noBtn.getBoundingClientRect();
+    const buttonCenterX = rect.left + rect.width / 2;
+    const buttonCenterY = rect.top + rect.height / 2;
+    
+    const distance = Math.sqrt(
+      Math.pow(e.clientX - buttonCenterX, 2) + 
+      Math.pow(e.clientY - buttonCenterY, 2)
+    );
+    
+    // If mouse is within 100 pixels of the button, move it anywhere on the page
+    if (distance < 100) {
+      const maxX = window.innerWidth - noBtn.offsetWidth;
+      const maxY = window.innerHeight - noBtn.offsetHeight;
+      const newX = Math.random() * maxX;
+      const newY = Math.random() * maxY;
+      noBtn.style.position = 'fixed';
+      noBtn.style.left = `${newX}px`;
+      noBtn.style.top = `${newY}px`;
+    }
+  });
+
+  // Prevent clicking the "No" button
+  noBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+  });
+
+  // Show result and play sound and float hearts
+  document.querySelector('.js-yes-btn').addEventListener('click', () => {
+    document.getElementById('result').style.display = 'block';
+    loveSound.play();
+
+    // Floating hearts
+    for (let i = 0; i < 10; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerText = '❤️';
+      heart.style.left = Math.random() * 100 + '%';
+      heart.style.top = '60%';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+  });
+</script>
+
+</body>
+</html>
